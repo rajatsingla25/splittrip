@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Profile </title>
+</head>
+<body>
+	<br>
+
+	<% flag = false %>
+  <% if @person %>
+  	<% flag = true %>
+    <%= @person.name %> <br>
+    <%= @person.username %> <br>
+    <%= @person.gender %> <br>
+    <%= @person.dob %> <br>
+  <% end %>
+
+  <% if @contact %>
+  	<% flag = true %>
+  	<%= @contact.phone %> <br>
+  	<%= @contact.address %> <br>
+  	<%= @contact.city %> <br>
+  	<%= @contact.pin %> <br>	
+  <% end %>
+
+  <% if flag == true %>
+  	<a href="/profile/edit"> Edit </a>
+  <% else %>
+  	<a href="/profile/create"> Create Profile </a>
+  <% end %>
+</body>
+</html>

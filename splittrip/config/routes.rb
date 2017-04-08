@@ -1,7 +1,26 @@
 Rails.application.routes.draw do
   
+  get 'group/index'
+
   get '/' => 'home#index'
+  get '/profile' => 'home#profile'
+  get '/profile/create' => 'home#create'
+  post '/profile/create/confirm' => 'home#create_profile'
+  get '/profile/edit' => 'home#edit'
+  post '/profile/edit/confirm' => 'home#edit_profile'
+
+  get '/groups' => 'group#index'
+  get '/groups/create' => 'group#create'
+  post '/groups/create/confirm' => 'group#create_group'
+  get '/groups/show/:group_id' => 'group#show'
+
+  post '/groups/participant/add' => 'group#add_participant'
+  post '/groups/participant/remove' => 'group#remove_participant'
+  post '/groups/participant/make_admin' => 'group#make_admin_participant'
+
+ 
   devise_for :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
