@@ -11,13 +11,25 @@ class HomeController < ApplicationController
   end
 
   def create_profile
-  	Person.create(
+    byebug
+  	person = Person.create(
   			user_id: current_user.id,
   			username: params[:username],
   			name: params[:name],
   			gender: params[:gender],
   			dob: params[:dob]
   		)
+
+    if(params[:photo])
+      file = params[:photo]
+      filename = person.id.to_s + '_' + file.original_filename
+      File.open(Rails.root.join('public', 'uploads', 'users', filename), 'wb') do |f|
+      f.write(file.read)
+      end
+      person.photo = file.original_filename
+      person.save
+    end
+
   	return redirect_to '/profile'
   end
 
@@ -27,7 +39,20 @@ class HomeController < ApplicationController
   end
 
   def edit_profile
-  	person = Person.find_by(user_id: current_user.id)
+    person = Person.find_by(user_id: current_user.id)
+    if(params[:photo])
+      file = params[:photo]
+      filename = person.id.to_s + '_' + file.original_filename
+      if(person.photo)
+        oldfilename = person.id.to_s + '_' + person.photo       
+        File.delete(Rails.root.join('public', 'uploads', 'users', oldfilename))
+      end
+      File.open(Rails.root.join('public', 'uploads', 'users', filename), 'wb') do |f|
+      f.write(file.read)
+      end
+      person.photo = file.original_filename
+      person.save
+    end
   	person.username = params[:username]
   	person.name = params[:name]
   	person.gender = params[:gender]

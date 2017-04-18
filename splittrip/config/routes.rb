@@ -14,11 +14,14 @@ Rails.application.routes.draw do
   post '/groups/create/confirm' => 'group#create_group'
   get '/groups/show/:group_id' => 'group#show'
 
-  post '/groups/participant/add' => 'group#add_participant'
-  post '/groups/participant/remove' => 'group#remove_participant'
+  # post '/groups/participant/add' => 'group#add_participant'
+  post '/groups/participant/add/remote' => 'group#add_participant_remote'
+  
+  post '/groups/participant/remove' => 'group#remove_participant'  
   post '/groups/participant/make_admin' => 'group#make_admin_participant'
 
- 
+  post '/transactions' => 'transaction#evaluate'
+
   devise_for :users
 
   # The priority is based upon order of creation: first created -> highest priority.
